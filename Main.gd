@@ -21,6 +21,6 @@ func check_water(cell): # Checks adjacent cells for water, trust me the really l
 	if tileMap.get_cellv(cell + Vector2.UP) == 3 or tileMap.get_cellv(cell + Vector2.LEFT) == 3 or tileMap.get_cellv(cell + Vector2.DOWN) == 3 or tileMap.get_cellv(cell + Vector2.RIGHT) == 3:
 			return true
 
-func _process(_delta):
-	if Input.is_action_just_pressed("ui_accept"):
-		shrink_island()
+
+func _on_next_stage():
+	shrink_island()
