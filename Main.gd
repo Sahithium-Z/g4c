@@ -1,6 +1,7 @@
 extends Node2D
 
-onready var tileMap = $TileMap
+onready var tileMap = $TileMap #Top tileset
+onready var bottom = $Bottom   #Bottom tileset
 onready var player = $Player
 
 func shrink_island():
@@ -30,8 +31,12 @@ func check_water(cell): # Checks adjacent cells for water, trust me the really l
 		return false
 
 func till_dirt(cell):
+	
 	if tileMap.get_cellv(cell) == 6:
+		#Set top tileset to dirt
 		tileMap.set_cellv(cell, 5)
+		#Set bottom tileset to grass
+		bottom.set_cellv(cell, 6)
 		tileMap.update_bitmask_area(cell)
 
 func _input(event):
