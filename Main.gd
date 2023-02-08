@@ -1,10 +1,13 @@
 extends Node2D
 
 onready var tileMap = $TileMap
+onready var player = $Player
 
 func shrink_island():
-	# Get all sand cells
+	# Get all floodable cells
 	var cells = tileMap.get_used_cells_by_id(4)
+	cells.append_array(tileMap.get_used_cells_by_id(5))
+	cells.append_array(tileMap.get_used_cells_by_id(6))
 	# Store cells that are going to get flooded in this table
 	var cells_to_flood = []
 	
@@ -22,7 +25,21 @@ func shrink_island():
 
 func check_water(cell): # Checks adjacent cells for water, trust me the really long if statement is worth it
 	if tileMap.get_cellv(cell + Vector2.UP) == 3 or tileMap.get_cellv(cell + Vector2.LEFT) == 3 or tileMap.get_cellv(cell + Vector2.DOWN) == 3 or tileMap.get_cellv(cell + Vector2.RIGHT) == 3:
-			return true
+		return true
+	else:
+		return false
+
+func till_dirt(cell):
+	if tileMap.get_cellv(cell) == 6:
+		tileMap.set_cellv(cell, 5)
+		tileMap.update_bitmask_area(cell)
+
+func _input(event):
+	if event.is_action_pressed("till_dirt"):
+		# Get player local position
+		var player_local_pos = tileMap.to_local(player.position)
+		var player_cell = tileMap.world_to_map(player_local_pos)
+		till_dirt(player_cell)
 
 
 func _on_next_stage():
