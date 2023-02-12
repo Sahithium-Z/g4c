@@ -1,6 +1,7 @@
 extends Node2D
 
-onready var tileMap = $TileMap
+onready var tileMap = $TileMap #Top tileset
+onready var bottom = $Bottom   #Bottom tileset
 onready var player = $Player
 onready var ray = $Player/RayCast2D
 onready var seeds = load("res://plant/plant.tscn")
@@ -40,9 +41,12 @@ func get_player_cell():
 	return player_cell
 
 func till_dirt(cell):
-	# must be on grass
+#must be on grass
 	if tileMap.get_cellv(cell) == 6:
+		#Set top tileset to dirt
 		tileMap.set_cellv(cell, 5)
+		#Set bottom tileset to grass
+		bottom.set_cellv(cell, 6)
 		tileMap.update_bitmask_area(cell)
 
 func plant_seed(cell):
