@@ -6,6 +6,10 @@ onready var player = $Player
 onready var ray = $Player/RayCast2D
 onready var seeds = load("res://plant/plant.tscn")
 
+var seed_count = 30
+var harvested_count = 0
+var money = 0
+
 func shrink_island():
 	# Get all floodable cells
 	var cells = tileMap.get_used_cells_by_id(4)
@@ -49,9 +53,13 @@ func till_dirt(cell):
 		bottom.set_cellv(cell, 6)
 		tileMap.update_bitmask_area(cell)
 
+func touching_plant():
+	return ray.get_collider() is Plant
+
 func plant_seed(cell):
 	# must be planted on dirt
-	if tileMap.get_cellv(cell) == 5 and not ray.get_collider() is Plant:
+	if tileMap.get_cellv(cell) == 5 and not touching_plant() and seed_count > 0:
+		seed_count -= 1
 		# instance the seeds scene
 		var seed_instance = seeds.instance()
 		add_child(seed_instance)
@@ -60,13 +68,42 @@ func plant_seed(cell):
 		var global_pos = tileMap.to_global(local_pos)
 		seed_instance.position = global_pos + Vector2(8, 8)
 
+func harvest_plant(plant):
+	if plant.growth_stage == 1:
+		harvested_count += 1
+		plant.queue_free()
+
+func sell_plants():
+	money += harvested_count * 3
+	harvested_count = 0
+	
+	print(money)
+
+func buy_seeds():
+	if seed_count < 30 and money > 30 - seed_count:
+		money -= 30 - seed_count
+		seed_count += 30 - seed_count
+	
+	print(money)
+
 func _input(event):
 	if event.is_action_pressed("till_dirt"):
 		# till dirt on player tile
 		till_dirt(get_player_cell())
+	
 	if event.is_action_pressed("plant_seeds"):
-		# plant a seed on player tile
-		plant_seed(get_player_cell())
+		if not touching_plant():
+			# plant a seed on player tile
+			plant_seed(get_player_cell())
+		else:
+			# harvest plant player is touching
+			harvest_plant(ray.get_collider())
+	
+	if event.is_action_pressed("sell_plants"):
+		sell_plants()
+	
+	if event.is_action_pressed("buy_seeds"):
+		buy_seeds()
 
 
 func _on_next_stage():
