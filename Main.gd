@@ -3,6 +3,8 @@ extends Node2D
 onready var tileMap = $TileMap #Top tileset
 onready var bottom = $Bottom   #Bottom tileset
 onready var player = $Player
+onready var ray = $Player/RayCast2D
+onready var seeds = load("res://plant/plant.tscn")
 
 func shrink_island():
 	# Get all floodable cells
@@ -30,8 +32,16 @@ func check_water(cell): # Checks adjacent cells for water, trust me the really l
 	else:
 		return false
 
-func till_dirt(cell):
+func get_player_cell():
+	# Get player local position
+	var player_local_pos = tileMap.to_local(player.position)
+	# Convert local position to TileMap position
+	var player_cell = tileMap.world_to_map(player_local_pos)
 	
+	return player_cell
+
+func till_dirt(cell):
+#must be on grass
 	if tileMap.get_cellv(cell) == 6:
 		#Set top tileset to dirt
 		tileMap.set_cellv(cell, 5)
@@ -39,12 +49,24 @@ func till_dirt(cell):
 		bottom.set_cellv(cell, 6)
 		tileMap.update_bitmask_area(cell)
 
+func plant_seed(cell):
+	# must be planted on dirt
+	if tileMap.get_cellv(cell) == 5 and not ray.get_collider() is Plant:
+		# instance the seeds scene
+		var seed_instance = seeds.instance()
+		add_child(seed_instance)
+		# position the seed
+		var local_pos = tileMap.map_to_world(cell)
+		var global_pos = tileMap.to_global(local_pos)
+		seed_instance.position = global_pos + Vector2(8, 8)
+
 func _input(event):
 	if event.is_action_pressed("till_dirt"):
-		# Get player local position
-		var player_local_pos = tileMap.to_local(player.position)
-		var player_cell = tileMap.world_to_map(player_local_pos)
-		till_dirt(player_cell)
+		# till dirt on player tile
+		till_dirt(get_player_cell())
+	if event.is_action_pressed("plant_seeds"):
+		# plant a seed on player tile
+		plant_seed(get_player_cell())
 
 
 func _on_next_stage():

@@ -1,16 +1,22 @@
-extends StaticBody2D
+extends Area2D
 
+class_name Plant
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+onready var tileMap = get_tree().get_root().find_node("TileMap", true, false)
+onready var tent = get_tree().get_root().find_node("Tent", true, false)
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	tent.connect("next_stage", self, "_on_next_stage")
 
+func get_current_cell():
+	# Get local position
+	var local_pos = tileMap.to_local(position)
+	# Convert local position to TileMap position
+	var cell = tileMap.world_to_map(local_pos)
+	
+	return cell
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _on_next_stage():
+	var cell = get_current_cell()
+	if tileMap.get_cellv(cell) == 3:
+		queue_free()
