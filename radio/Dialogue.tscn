@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ui/m5x7.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://radio/Dialogue.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 29
+font_data = ExtResource( 1 )
+
+[node name="Dialogue" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 464.0
+margin_bottom = 91.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 10.0
+margin_top = 9.0
+margin_right = 456.0
+margin_bottom = 83.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "what is goood guys it is your boy"
+autowrap = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
