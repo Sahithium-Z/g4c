@@ -1,0 +1,26 @@
+extends Control
+
+onready var money_label = $MoneyCount
+onready var world = get_tree().get_root().find_node("World", true, false)
+onready var money = world.money setget set_money
+onready var tween = $Tween
+
+func set_money(x):
+	#Money is never less than 0
+	money = max(x, 0)
+	if money_label != null:
+		#Changes label to money
+		money_label.text = "$" + str(money)
+
+func _ready():
+	self.money = 0
+	#Connects to signals from world
+	world.connect("money_changed", self, "set_money")
+
+func _input(event):
+	if event.is_action_pressed("ui_page_down"):
+		fade_in()
+
+func fade_in():
+	tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()

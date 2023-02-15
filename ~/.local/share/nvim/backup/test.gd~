@@ -25,9 +25,9 @@ func _input(event):
 	if event.is_action_pressed("ui_accept") && is_sleeping && is_fading:
 		tween.interpolate_property(self, "color", Color(0, 0, 0, 1), Color(0, 0, 0, 0), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween.start()
-		other_tween.interpolate_property(other_label, "percent_visible", 1.0, 0.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		other_tween.interpolate_property(other_label, "percent_visible", 0.0, 1.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		other_tween.start()
-		other_other_tween.interpolate_property(label, "percent_visible", 1.0, 0.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		other_other_tween.interpolate_property(label, "percent_visible", 0.0, 1.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		other_other_tween.start()
 		which_timer = false
 		is_fading = false
