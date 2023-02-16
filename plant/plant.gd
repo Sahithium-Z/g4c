@@ -4,6 +4,7 @@ class_name Plant
 
 onready var tileMap = get_tree().get_root().find_node("TileMap", true, false)
 onready var tent = get_tree().get_root().find_node("Tent", true, false)
+onready var world = get_tree().get_root().find_node("World", true, false)
 onready var animatedSprite = $AnimatedSprite
 onready var timer = $Timer
 
@@ -11,6 +12,7 @@ var growth_stage = 0
 
 func _ready():
 	tent.connect("next_stage", self, "_on_next_stage")
+	world.connect("fertilizer", self, "grow")
 
 func get_current_cell():
 	# Get local position
@@ -20,9 +22,13 @@ func get_current_cell():
 	
 	return cell
 
+func grow():
+	if growth_stage < 1:
+		growth_stage += 1
+	animatedSprite.frame = growth_stage
+
 func _on_next_stage():
 	timer.start()
-
 
 
 func _on_Timer_timeout():
@@ -31,7 +37,4 @@ func _on_Timer_timeout():
 	if tileMap.get_cellv(cell) == 3:
 		queue_free()
 	
-	# Grow
-	if growth_stage < 1:
-		growth_stage += 1
-	animatedSprite.frame = growth_stage
+	grow()

@@ -14,25 +14,31 @@ var seed_count = 30
 var harvested_count = 0
 var money = 0
 
+var times_to_rise = 1
+
+var used_fertilizer = false
+signal fertilizer
+
 func shrink_island():
-	# Get all floodable cells
-	var cells = tileMap.get_used_cells_by_id(4)
-	cells.append_array(tileMap.get_used_cells_by_id(5))
-	cells.append_array(tileMap.get_used_cells_by_id(6))
-	# Store cells that are going to get flooded in this table
-	var cells_to_flood = []
-	
-	# Loop through each sand cell to check if it is adjacent to water
-	for cell in cells:
-		if check_water(cell):
-			cells_to_flood.append(cell)
-	
-	# Flood cells once water checks are done
-	for cell in cells_to_flood:
-		tileMap.set_cellv(cell, 3)
-	
-	# Update autotiles
-	tileMap.update_bitmask_region()
+	for i in range(times_to_rise):
+		# Get all floodable cells
+		var cells = tileMap.get_used_cells_by_id(4)
+		cells.append_array(tileMap.get_used_cells_by_id(5))
+		cells.append_array(tileMap.get_used_cells_by_id(6))
+		# Store cells that are going to get flooded in this table
+		var cells_to_flood = []
+		
+		# Loop through each sand cell to check if it is adjacent to water
+		for cell in cells:
+			if check_water(cell):
+				cells_to_flood.append(cell)
+		
+		# Flood cells once water checks are done
+		for cell in cells_to_flood:
+			tileMap.set_cellv(cell, 3)
+		
+		# Update autotiles
+		tileMap.update_bitmask_region()
 
 func check_water(cell): # Checks adjacent cells for water, trust me the really long if statement is worth it
 	if tileMap.get_cellv(cell + Vector2.UP) == 3 or tileMap.get_cellv(cell + Vector2.LEFT) == 3 or tileMap.get_cellv(cell + Vector2.DOWN) == 3 or tileMap.get_cellv(cell + Vector2.RIGHT) == 3:
@@ -91,10 +97,28 @@ func buy_seeds():
 	if seed_count < 30 and money > 30 - seed_count:
 		money -= 30 - seed_count
 		seed_count += 30 - seed_count
-		emit_signal("money_changed", money)
-		emit_signal("seeds_changed", seed_count)
+	else:
+		seed_count += money
+		money -= money
+	emit_signal("money_changed", money)
+	emit_signal("seeds_changed", seed_count)
 	
 	print(money)
+
+func floodbarrier():
+	if times_to_rise > 0 and money > 40:
+		times_to_rise = 0
+		money -= 40
+		emit_signal("money_changed", money)
+
+func fertilizer():
+	print(used_fertilizer)
+	if not used_fertilizer and money > 40:
+		emit_signal("fertilizer")
+		money -= 40
+		emit_signal("money_changed", money)
+		used_fertilizer = true
+		print(used_fertilizer)
 
 func _input(event):
 	if event.is_action_pressed("till_dirt"):
@@ -114,6 +138,12 @@ func _input(event):
 	
 	if event.is_action_pressed("buy_seeds"):
 		buy_seeds()
+	
+	if event.is_action_pressed("floodbarrier"):
+		floodbarrier()
+	
+	if event.is_action_pressed("fertilizer"):
+		fertilizer()
 
 
 func _on_next_stage():
@@ -121,3 +151,5 @@ func _on_next_stage():
 
 func _on_Timer_timeout():
 	shrink_island()
+	times_to_rise = 1
+	used_fertilizer = false

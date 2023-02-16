@@ -4,6 +4,7 @@ onready var money_label = $MoneyCount
 onready var world = get_tree().get_root().find_node("World", true, false)
 onready var money = world.money setget set_money
 onready var tween = $Tween
+onready var player = get_tree().get_root().find_node("Player", true, false)
 
 func set_money(x):
 	#Money is never less than 0
@@ -22,5 +23,6 @@ func _input(event):
 		fade_in()
 
 func fade_in():
+	player.set_active(false)
 	tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
