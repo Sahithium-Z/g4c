@@ -87,7 +87,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 
 [node name="Radio" parent="." instance=ExtResource( 7 )]
-position = Vector2( 180, 35 )
+position = Vector2( -7, -47 )
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
