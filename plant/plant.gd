@@ -5,6 +5,7 @@ class_name Plant
 onready var tileMap = get_tree().get_root().find_node("TileMap", true, false)
 onready var tent = get_tree().get_root().find_node("Tent", true, false)
 onready var animatedSprite = $AnimatedSprite
+onready var timer = $Timer
 
 var growth_stage = 0
 
@@ -20,6 +21,11 @@ func get_current_cell():
 	return cell
 
 func _on_next_stage():
+	timer.start()
+
+
+
+func _on_Timer_timeout():
 	# Checking if the plant is going to be destroyed by water
 	var cell = get_current_cell()
 	if tileMap.get_cellv(cell) == 3:

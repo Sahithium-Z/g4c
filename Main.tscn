@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tileset.tres" type="TileSet" id=2]
@@ -6,8 +6,13 @@
 [ext_resource path="res://Tent.tscn" type="PackedScene" id=4]
 [ext_resource path="res://bottom.tres" type="TileSet" id=5]
 [ext_resource path="res://ui/UI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://radio/Radio.tscn" type="PackedScene" id=7]
+[ext_resource path="res://radio/Dialogue.tscn" type="PackedScene" id=8]
+[ext_resource path="res://ui/Fade.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ui/Game Over.tscn" type="PackedScene" id=10]
 
 [node name="World" type="Node2D"]
+position = Vector2( -3, -1 )
 script = ExtResource( 3 )
 
 [node name="Bottom" type="TileMap" parent="."]
@@ -34,4 +39,52 @@ position = Vector2( 126, 376 )
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource( 6 )]
 
+[node name="Dialogue" parent="CanvasLayer" instance=ExtResource( 8 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -229.0
+margin_top = -91.9999
+margin_right = -189.0
+margin_bottom = -51.9999
+
+[node name="Fade" parent="CanvasLayer" instance=ExtResource( 9 )]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 4096.0
+margin_bottom = 4096.0
+color = Color( 1, 1, 1, 0 )
+
+[node name="RichTextLabel" parent="CanvasLayer/Fade" index="2"]
+visible_characters = 0
+percent_visible = 0.0
+text = "The Next Day...
+"
+
+[node name="RichTextLabel2" parent="CanvasLayer/Fade" index="5"]
+margin_left = 31.0
+margin_top = 161.0
+margin_right = 31.0
+margin_bottom = 93.0
+visible_characters = 0
+percent_visible = 0.0
+text = "(press enter to continue)"
+
+[node name="Game Over" parent="CanvasLayer" instance=ExtResource( 10 )]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="Radio" parent="." instance=ExtResource( 7 )]
+position = Vector2( 180, 35 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="next_stage" from="Tent" to="." method="_on_next_stage"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[editable path="CanvasLayer/Fade"]

@@ -8,7 +8,7 @@ signal next_stage
 
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
-		if touching_player && !fade.is_sleeping:
+		if touching_player && fade.is_sleeping:
 			emit_signal("next_stage")
 
 

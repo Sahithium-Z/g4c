@@ -50,8 +50,3 @@ func apply_x_acceleration(amount):
 
 func apply_y_acceleration(amount):
 	velocity.y = move_toward(velocity.y, 50 * amount, 6)
-
-func set_active(active):
-	set_physics_process(active)
-	set_process(active)
-	set_process_input(active)
