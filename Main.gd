@@ -5,6 +5,9 @@ onready var bottom = $Bottom   #Bottom tileset
 onready var player = $Player
 onready var ray = $Player/RayCast2D
 onready var seeds = load("res://plant/plant.tscn")
+signal money_changed
+signal seeds_changed
+signal plants_changed
 
 var seed_count = 30
 var harvested_count = 0
@@ -60,6 +63,7 @@ func plant_seed(cell):
 	# must be planted on dirt
 	if tileMap.get_cellv(cell) == 5 and not touching_plant() and seed_count > 0:
 		seed_count -= 1
+		emit_signal("seeds_changed", seed_count)
 		# instance the seeds scene
 		var seed_instance = seeds.instance()
 		add_child(seed_instance)
@@ -71,18 +75,23 @@ func plant_seed(cell):
 func harvest_plant(plant):
 	if plant.growth_stage == 1:
 		harvested_count += 1
+		emit_signal("plants_changed", harvested_count)
 		plant.queue_free()
 
 func sell_plants():
 	money += harvested_count * 3
 	harvested_count = 0
-	
+	emit_signal("plants_changed", harvested_count)
+	#emit signal and variable
+	emit_signal("money_changed", money)
 	print(money)
 
 func buy_seeds():
 	if seed_count < 30 and money > 30 - seed_count:
 		money -= 30 - seed_count
 		seed_count += 30 - seed_count
+		emit_signal("money_changed", money)
+		emit_signal("seeds_changed", seed_count)
 	
 	print(money)
 
