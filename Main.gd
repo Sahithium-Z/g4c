@@ -9,10 +9,15 @@ onready var timer = $Timer
 signal money_changed
 signal seeds_changed
 signal plants_changed
+signal explaining_controls
 
 var seed_count = 30
 var harvested_count = 0
 var money = 0
+
+func _ready():
+	emit_signal("explaining_controls")
+
 
 func shrink_island():
 	# Get all floodable cells
