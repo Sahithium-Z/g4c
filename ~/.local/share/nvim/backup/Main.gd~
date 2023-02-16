@@ -118,8 +118,6 @@ func _input(event):
 
 func _on_next_stage():
 	timer.start()
-	shrink_island()
-
 
 func _on_Timer_timeout():
-	pass # Replace with function body.
+	shrink_island()

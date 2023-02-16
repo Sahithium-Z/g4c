@@ -9,15 +9,21 @@ onready var timer = $Timer
 signal money_changed
 signal seeds_changed
 signal plants_changed
+signal explaining_controls
 
 var seed_count = 30
 var harvested_count = 0
 var money = 0
 
+
 var times_to_rise = 1
 
 var used_fertilizer = false
 signal fertilizer
+
+func _ready():
+	emit_signal("explaining_controls")
+
 
 func shrink_island():
 	for i in range(times_to_rise):
