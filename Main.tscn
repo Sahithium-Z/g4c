@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tileset.tres" type="TileSet" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://ui/Fade.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ui/Game Over.tscn" type="PackedScene" id=10]
 [ext_resource path="res://game_unnamed.mp3" type="AudioStream" id=11]
+[ext_resource path="res://ui/Control.tscn" type="PackedScene" id=12]
 
 [node name="World" type="Node2D"]
 position = Vector2( -3, -1 )
@@ -74,6 +75,12 @@ text = "(press enter to continue)"
 
 [node name="Game Over" parent="CanvasLayer" instance=ExtResource( 10 )]
 modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 12 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
