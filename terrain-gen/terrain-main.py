@@ -36,10 +36,6 @@ for i in range(x_grid):
 #print()
  
 #GENERATE REFRENCE POINTS
-"""
-refrenceValues = [rint(min_height,max_height), rint(min_height,max_height), rint(min_height,max_height), rint(min_height,max_height), rint(min_height,max_height), rint(min_height,max_height), rint(min_height,max_height), rint(min_height,max_height), rint(min_height,max_height)]
-refrenceLocations = [[1,1],[1,25],[1,48],[25,1],[25,25],[25,48],[48,1],[48,25],[48,48]]
-"""
 refrenceValues = []
 refrenceLocations = []
 for i in range(num_refrence_points):
@@ -62,7 +58,7 @@ grid = generator.generate(grid, refrenceValues, refrenceLocations, specialGen)
 
 
 
-#Just to visualize map
+#Just to visualize map (temporary)
 visualizationMultiplier = 3
 if specialGen:
   visualizationMultiplier = 1
@@ -72,7 +68,8 @@ for x in range(len(grid)):
   for y in range(len(grid[x])):
     if grid[x][y] < lowest:
       lowest = grid[x][y]
-print(lowest)
+      
+#print(lowest)
 temp = []
 for x in range(len(grid)):
   for y in range(len(grid[x])):
