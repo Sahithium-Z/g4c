@@ -9,10 +9,10 @@
 script = ExtResource( 4 )
 
 [node name="Panel" type="Panel" parent="."]
-margin_left = -230.0
-margin_top = -281.0
-margin_right = 294.0
-margin_bottom = 254.0
+margin_left = -262.0
+margin_top = -269.0
+margin_right = 262.0
+margin_bottom = 266.0
 theme = ExtResource( 1 )
 
 [node name="Label" type="Label" parent="Panel"]
@@ -64,5 +64,95 @@ margin_bottom = -8.0
 custom_fonts/font = ExtResource( 2 )
 text = "SELL"
 
+[node name="Button3" type="Button" parent="Panel"]
+margin_left = 80.0
+margin_top = 436.0
+margin_right = 345.0
+margin_bottom = 494.0
+theme = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="Panel/Button3"]
+margin_left = 36.0
+margin_top = -2.0
+margin_right = 228.0
+margin_bottom = 49.0
+custom_fonts/font = ExtResource( 2 )
+text = "UPGRADES"
+
+[node name="Panel2" type="Panel" parent="."]
+margin_left = -262.0
+margin_top = -269.0
+margin_right = 262.0
+margin_bottom = 266.0
+theme = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="Panel2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 70.0
+margin_top = 65.0
+margin_right = -70.0
+margin_bottom = -65.0
+custom_fonts/font = ExtResource( 2 )
+text = "Fertilizer
+$40 per upgrade
+
+Floodbarrier
+$40 per upgrade
+"
+
+[node name="Floodbarrier" type="Button" parent="Panel2"]
+margin_left = 80.0
+margin_top = 343.0
+margin_right = 249.0
+margin_bottom = 401.0
+theme = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="Panel2/Floodbarrier"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = -1.0
+margin_right = -49.0
+margin_bottom = -8.0
+custom_fonts/font = ExtResource( 2 )
+text = "BUY"
+
+[node name="Fertilizer" type="Button" parent="Panel2"]
+margin_left = 83.0
+margin_top = 174.0
+margin_right = 252.0
+margin_bottom = 232.0
+theme = ExtResource( 3 )
+
+[node name="Label2" type="Label" parent="Panel2/Fertilizer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 38.0
+margin_top = -1.0
+margin_right = -35.0
+margin_bottom = -8.0
+custom_fonts/font = ExtResource( 2 )
+text = "BUY"
+
+[node name="plants" type="Button" parent="Panel2"]
+margin_left = 80.0
+margin_top = 436.0
+margin_right = 345.0
+margin_bottom = 494.0
+theme = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="Panel2/plants"]
+margin_left = 58.0
+margin_top = -2.0
+margin_right = 208.0
+margin_bottom = 49.0
+custom_fonts/font = ExtResource( 2 )
+text = "PLANTS"
+
 [connection signal="pressed" from="Panel/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Panel/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Panel/Button3" to="." method="_on_Button3_pressed"]
+[connection signal="pressed" from="Panel2/Floodbarrier" to="." method="_on_Floodbarrier_pressed"]
+[connection signal="pressed" from="Panel2/Fertilizer" to="." method="_on_Fertilizer_pressed"]
+[connection signal="pressed" from="Panel2/plants" to="." method="_on_plants_pressed"]

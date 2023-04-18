@@ -16,7 +16,7 @@ signal shop_opened
 var seed_count = 30
 var harvested_count = 0
 var money = 0
-
+var control = false
 
 var times_to_rise = 1
 
@@ -27,7 +27,8 @@ func _ready():
 	emit_signal("explaining_controls")
 	shop.connect("bought_seeds", self, "buy_seeds")
 	shop.connect("sold_plants", self, "sell_plants")
-	
+	shop.connect("bought_fertilizer", self, "fertilizer")
+	shop.connect("bought_floodbarrier", self, "floodbarrier")
 
 
 func shrink_island():
@@ -147,17 +148,9 @@ func _input(event):
 			# harvest plant player is touching
 			harvest_plant(ray.get_collider())
 	
-	if event.is_action_pressed("sell_plants"):
-		sell_plants()
-	
-	if event.is_action_pressed("buy_seeds"):
+	if event.is_action_pressed("buy_seeds") && !control:
 		open_shop()
 	
-	if event.is_action_pressed("floodbarrier"):
-		floodbarrier()
-	
-	if event.is_action_pressed("fertilizer"):
-		fertilizer()
 
 
 func _on_next_stage():

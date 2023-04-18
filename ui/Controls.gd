@@ -17,6 +17,7 @@ func _input(event):
 func _on_explaining_controls():
 	self.visible = true
 	player.set_active(false)
+	world.control = true
 	control_active = true
 	control_id = -1
 	next_line()
@@ -28,6 +29,7 @@ func next_line():
 		$Timer.start()
 		self.visible = false
 		player.set_active(true)
+		world.control = false
 		return
 
 
