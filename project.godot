@@ -30,6 +30,10 @@ config/name="G4C"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/stretch/aspect="keep"
+
 [global]
 
 import=false

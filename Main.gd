@@ -6,10 +6,12 @@ onready var player = $Player
 onready var ray = $Player/RayCast2D
 onready var seeds = load("res://plant/plant.tscn")
 onready var timer = $Timer
+onready var shop = $CanvasLayer/Shop
 signal money_changed
 signal seeds_changed
 signal plants_changed
 signal explaining_controls
+signal shop_opened
 
 var seed_count = 30
 var harvested_count = 0
@@ -23,6 +25,9 @@ signal fertilizer
 
 func _ready():
 	emit_signal("explaining_controls")
+	shop.connect("bought_seeds", self, "buy_seeds")
+	shop.connect("sold_plants", self, "sell_plants")
+	
 
 
 func shrink_island():
@@ -125,6 +130,9 @@ func fertilizer():
 		emit_signal("money_changed", money)
 		used_fertilizer = true
 		print(used_fertilizer)
+		
+func open_shop():
+	emit_signal("shop_opened")
 
 func _input(event):
 	if event.is_action_pressed("till_dirt"):
@@ -143,7 +151,7 @@ func _input(event):
 		sell_plants()
 	
 	if event.is_action_pressed("buy_seeds"):
-		buy_seeds()
+		open_shop()
 	
 	if event.is_action_pressed("floodbarrier"):
 		floodbarrier()
