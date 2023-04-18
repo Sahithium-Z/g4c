@@ -20,8 +20,8 @@ num_refrence_points = 10
 #Special generation chance
 specialGen = (1 == rint(1,1000))
 
-
-
+#water level
+water_level = 8
 
 
 grid = []
@@ -58,6 +58,19 @@ grid = generator.generate(grid, refrenceValues, refrenceLocations, specialGen)
 
 #replace parameter with following when using QuadGrid.py : [generator.generate(temp, refrenceValues, refrenceLocations, specialGen)] * 4
 grid = assembler.quadGrid(grid)
+
+
+highest = min_height
+for x in range(len(grid)):
+  for y in range(len(grid[x])):
+    if grid[x][y] > highest:
+      highest = grid[x][y]
+
+for x in range(len(grid)):
+  for y in range(len(grid[x])):
+    grid[x][y] = highest - grid[x][y]
+    grid[x][y] -= water_level
+
 
 
 
