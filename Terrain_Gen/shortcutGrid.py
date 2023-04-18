@@ -28,23 +28,25 @@ class island:
     #sides = [right, bottom, left, top]
     sides = []
     temp = 0
-    for y in range(len(grid[len(grid) - 1])):
-      temp += grid[len(grid) - 1][y]
+    for x in range(len(grid[len(grid) - 1])):
+      temp += grid[x][0]
     sides.append(temp)
     del temp
     temp = 0
-    for x in range(len(grid)):
-      temp += grid[x][len(grid) - 1]
-    sides.append(temp)
-    del temp
-    temp = 0
-    for y in range(len(grid[0])):
+    for y in range(len(grid)):
       temp += grid[0][y]
     sides.append(temp)
     del temp
     temp = 0
-    for x in range(len(grid)):
-      temp += grid[x][0]
+    for x in range(len(grid[0])):
+      
+      temp += grid[x][len(grid) - 1]
+    sides.append(temp)
+    del temp
+    temp = 0
+    for y in range(len(grid)):
+      
+      temp += grid[len(grid) - 1][y]
     sides.append(temp)
     del temp
 
@@ -53,8 +55,8 @@ class island:
     highPair = 0
     for side in range(len(sides)):
       if side == 3:
-        if sides[side] + sides[0] > temp:
-          temp = sides[side] + sides[0]
+        if sides[3] + sides[0] > temp:
+          temp = sides[3] + sides[0]
           highPair = side
       else:
         if sides[side] + sides[side + 1] > temp:
@@ -86,7 +88,7 @@ class island:
     grid.extend(gridiii)
 
   
-    if grid[int(len(grid) / 2)][int(len(grid) / 2)] < 
+    #if grid[int(len(grid) / 2)][int(len(grid) / 2)] < 
 
 
 
