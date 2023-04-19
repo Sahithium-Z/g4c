@@ -88,9 +88,13 @@ func generate(grid_empty, values, locations):
 	return another_grid
 
 func rotate(qgrid):
-	for j in range(len(grid)):
-		for i in range(len(grid[0])):
-			qgrid[j][i] = qgrid[i][j]
+	var new_arr = []
+	for i in range(len(qgrid[0])):
+		var row = []
+		for j in range(len(qgrid)):
+			row.append(qgrid[len(qgrid) - j - 1][i])
+		new_arr.append(row)
+	return new_arr
 #temp = [[grid[j][i] for j in range(len(grid))] for i in range(len(grid[0])-1,-1,-1)]
 
 func reflect(qgrid):
