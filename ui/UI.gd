@@ -1,5 +1,6 @@
 extends Control
 
+
 onready var money_label = $Money
 onready var seeds_label = $Seed
 onready var plants_label = $Plant
